@@ -16,7 +16,7 @@ body {
 }
 
 .fade-out { opacity: 0; }
-header { position: relative; width: 100%; }
+header { width: 100%; }
 a { text-decoration: none; color: inherit; }
 
 .navbar {
@@ -30,7 +30,7 @@ a { text-decoration: none; color: inherit; }
   opacity: 0;
 }
 
-@keyframes slideDown { to { transform: translateY(0); opacity: 1; }}
+@keyframes slideDown { to { transform: translateY(0); opacity: 1; } }
 
 .navbar nav a {
   margin: 0 15px;
@@ -67,6 +67,10 @@ a { text-decoration: none; color: inherit; }
   background: transparent;
 }
 
+/* ============================= */
+/*         PROFIL UTAMA          */
+/* ============================= */
+
 .profilutama {
   background-image: linear-gradient(rgba(48, 38, 5, 0.5), rgba(0, 0, 0, 0.5)), url(profilutamabg.JPG);
   background-size: cover;
@@ -83,24 +87,64 @@ a { text-decoration: none; color: inherit; }
   height: auto;
 }
 
-.myphoto, .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 30px;
-}
+/* ========================================================== */
+/*      🔥 NEW INTERACTIVE SLIDER (MY PHOTO & GALLERY)        */
+/* ========================================================== */
 
-.myphoto img, .gallery img {
+.slider-wrapper {
+  position: relative;
   width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  padding: 20px 0;
 }
 
-.myphoto img:hover, .gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+.slider-track {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
 }
+
+.slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-track img {
+  height: 200px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  user-select: none;
+  object-fit: cover;
+  background: #333;
+}
+
+/* Tombol kiri kanan */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: #fff;
+  padding: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.slider-btn.left { left: 10px; }
+.slider-btn.right { right: 10px; }
+
+
+@media (max-width: 600px) {
+  .slider-btn {
+    display: none;
+  }
+}
+
+/* ========================================================= */
 
 .services { padding: 60px 40px; }
 .service-grid {
@@ -141,25 +185,21 @@ footer {
 }
 
 h3 { text-align: center; }
-
 .chatme { text-align: center; }
-
-html {
-  scroll-behavior: smooth;
-}
-
+html { scroll-behavior: smooth; }
 
   </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
 <header>
   <div class="navbar">
     <h1>EllanoPhotos📸</h1>
     <nav>
-      <a href="#home" >Home</a>
-      <a href="#about" >About</a>
-      <a href="#gallery" >Gallery</a>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
       <a href="#">Lorem</a>
       <a href="#">Lorem</a>
       <a href="#">Lorem</a>
@@ -168,10 +208,11 @@ html {
   </div>
 </header>
 
+<!-- PROFIL -->
 <section class="profilutama" id="home">
   <div class="profilutama-content">
     <h2>Gw Lufelan Me Bilek</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit nec faucibus mattis pulvinar.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit nec faucibus mattis pulvinar.</p><br>
     <div class="profilutama-buttons">
       <a href="#gallery" class="btn">Browse My Creation</a>
       <a href="https://www.instagram.com/lufelano/" class="btn-outline">My Instagram</a>
@@ -182,42 +223,60 @@ html {
   </div>
 </section>
 
-<section class="myphoto">
-  <img src="img/001.jpg" alt="Foto Saya" />
-  <img src="img/002.jpg" alt="Foto Saya" />
-  <img src="img/003.jpg" alt="Foto Saya" />
-  <img src="img/004.jpg" alt="Foto Saya" />
-  <img src="img/005.jpg" alt="Foto Saya" />
-  <img src="img/006.jpg" alt="Foto Saya" />
-  <img src="img/007.jpg" alt="Foto Saya" />
-  <img src="img/008.jpg" alt="Foto Saya" />
-</section>
+<!-- ---------------------------- -->
+<!-- 🔥 MY PHOTO (INTERACTIVE)    -->
+<!-- ---------------------------- -->
+<section class="slider-wrapper">
+  <button class="slider-btn left">◀</button>
+  <button class="slider-btn right">▶</button>
 
-<section class="services">
-  <h3>Our services</h3>
-  <div class="service-grid">
-    <div class="service-box"><h4>01 Photography</h4><p>Lorem ipsum dolor sit amet consectetur adipiscing elit suscipit lacus egestas cursus.</p></div>
-    <div class="service-box"><h4>02 Videography</h4><p>Lorem ipsum dolor sit amet consectetur adipiscing elit suscipit lacus egestas cursus.</p></div>
-    <div class="service-box"><h4>03 Lorem ipsum</h4><p>Lorem ipsum dolor sit amet consectetur adipiscing elit suscipit lacus egestas cursus.</p></div>
-    <div class="service-box"><h4>04 Lorem ipsum</h4><p>Lorem ipsum dolor sit amet consectetur adipiscing elit suscipit lacus egestas cursus.</p></div>
+  <div class="slider-track" id="myphoto">
+    <img src="img/001.jpg">
+    <img src="img/002.jpg">
+    <img src="img/003.jpg">
+    <img src="img/004.jpg">
+    <img src="img/005.jpg">
+    <img src="img/006.jpg">
+    <img src="img/007.jpg">
+    <img src="img/008.jpg">
   </div>
 </section>
 
-<section class="gallery" id="gallery">
-  <img src="img/p01.jpg" />
-  <img src="img/p02.jpg" />
-  <img src="img/p03.jpg" />
-  <img src="img/p04.jpg" />
-  <img src="img/p05.jpg" />
-  <img src="img/p06.jpg" />
-  <img src="img/p07.jpg" />
-  <img src="img/p08.jpg" />
-  <img src="img/p09.jpg" />
-  <img src="img/p10.jpg" />
-  <img src="img/p11.jpg" />
-  <img src="img/p12.jpg" />
+<!-- SERVICES -->
+<section class="services">
+  <h3>Our services</h3>
+  <div class="service-grid">
+    <div class="service-box"><h4>01 Photography</h4><p>Lorem ipsum dolor sit amet...</p></div>
+    <div class="service-box"><h4>02 Videography</h4><p>Lorem ipsum dolor sit amet...</p></div>
+    <div class="service-box"><h4>03 Lorem ipsum</h4><p>Lorem ipsum dolor sit amet...</p></div>
+    <div class="service-box"><h4>04 Lorem ipsum</h4><p>Lorem ipsum dolor sit amet...</p></div>
+  </div>
 </section>
 
+<!-- ---------------------------- -->
+<!-- 🔥 GALLERY (INTERACTIVE)     -->
+<!-- ---------------------------- -->
+<section class="slider-wrapper" id="gallery">
+  <button class="slider-btn left">◀</button>
+  <button class="slider-btn right">▶</button>
+
+  <div class="slider-track">
+    <img src="img/p01.jpg">
+    <img src="img/p02.jpg">
+    <img src="img/p03.jpg">
+    <img src="img/p04.jpg">
+    <img src="img/p05.jpg">
+    <img src="img/p06.jpg">
+    <img src="img/p07.jpg">
+    <img src="img/p08.jpg">
+    <img src="img/p09.jpg">
+    <img src="img/p10.jpg">
+    <img src="img/p11.jpg">
+    <img src="img/p12.jpg">
+  </div>
+</section>
+
+<!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="container1">
     <h2>Selamat datang kawan kawan</h2>
@@ -229,18 +288,13 @@ html {
     <img src="mypasfoto.jpg" class="profile-pic" />
 
     <div class="bio">
-      <p>Nama saya <strong>M. Azam Lufelan Budiyono</strong>. Gatau Yang penting keisi.</p>
+      <p>Nama saya <strong>M. Azam Lufelan Budiyono</strong>.</p>
       <p>hai.</p>
-    </div>
-
-    <div class="info">
-      <p><strong>Email:</strong> zamlufelan@gmail.com</p>
-      <p><strong>Telepon:</strong> 0831-0357-9261</p>
-      <p><strong>Alamat:</strong> SMKN 2 YOGYAKARTA, DIY , Indonesia</p>
     </div>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section class="about-section" id="contact">
   <div class="container2">
     <h3>Chat With Me</h3>
@@ -254,14 +308,63 @@ html {
 
 <footer><p>&copy; 2025 Azam Lufelan. XI DKV 1.</p></footer>
 
+<!-- =============================================================== -->
+<!-- 🔥 INTERACTIVE JS (Drag, Swipe, Button Scroll, Auto Smooth)     -->
+<!-- =============================================================== -->
 <script>
-const links = document.querySelectorAll('.nav-link');
-links.forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.body.classList.add('fade-out');
-    setTimeout(() => { window.location = this.href; }, 500);
+
+// buat semua slider bisa geser
+document.querySelectorAll(".slider-wrapper").forEach(wrapper => {
+  
+  const track = wrapper.querySelector(".slider-track");
+  const btnLeft = wrapper.querySelector(".slider-btn.left");
+  const btnRight = wrapper.querySelector(".slider-btn.right");
+
+  // tombol klik kiri kanan
+  btnLeft.addEventListener("click", () => {
+    track.scrollBy({ left: -300, behavior: "smooth" });
   });
+
+  btnRight.addEventListener("click", () => {
+    track.scrollBy({ left: 300, behavior: "smooth" });
+  });
+
+  // drag pakai mouse
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  track.addEventListener("mousedown", e => {
+    isDown = true;
+    track.classList.add("active");
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+
+  track.addEventListener("mouseleave", () => { isDown = false; track.classList.remove("active"); });
+  track.addEventListener("mouseup", () => { isDown = false; track.classList.remove("active"); });
+
+  track.addEventListener("mousemove", e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX);
+    track.scrollLeft = scrollLeft - walk;
+  });
+
+  // swipe untuk HP
+  let touchStartX = 0;
+  track.addEventListener("touchstart", e => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  track.addEventListener("touchmove", e => {
+    const touch = e.touches[0];
+    let move = touch.clientX - touchStartX;
+    track.scrollLeft -= move;
+    touchStartX = touch.clientX;
+  });
+
 });
 </script>
 
